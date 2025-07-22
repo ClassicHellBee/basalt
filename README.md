@@ -4,7 +4,7 @@ Basalt does not currently include the following features, they are being develop
 - Basalt manager
 - Documentation
 - Binaries for kernel
-Other packages are not guaranteed to work if they are not compatible with lfs-11.3.
+\nOther packages are not guaranteed to work if they are not compatible with lfs-11.3.
 # Download
 At the moment we only provide the amd64 image, but in the future we want to expand it to aarch64.
 For now we only provide the image without the package manager because it is an alpha image.
