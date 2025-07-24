@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Handbook AMD64 - Basalt Linux</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html" class="logo">Basalt Linux</a>
+      <div class="nav-links">
+        <a href="download.html" class="nav-link">Downloads</a>
+        <a href="handbook.html" class="nav-link active">Handbook</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1>Handbook for AMD64 Source Edition</h1>
+    <p>This is the manual handbook for creating a Basalt system using Stage3 without a package manager.</p>
+    <p>From extracting the image to having a functional system, everything else besides the system will be written in a separate guide.</p>
+    <p>It is assumed that you are using an Ubuntu/Debian host system with an active desktop environment for the Stage 3 download. A Live CD should be fine.</p>
+    <p></p>
+    <h2>I. Partition table</h2>
+    <p>First of all, let's clarify some concepts. We assume that you are using the /dev/sda hard drive for the installation, so the suggested partition table will be below.</p>
+    <section class="partition-guide">
+  <h2>Recommended partition scheme (EFI)</h2>
+  <table class="partition-table">
+    <thead>
+      <tr>
+        <th>Partition</th>
+        <th>Usage</th>
+        <th>Recomended size</th>
+        <th>File system</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>/dev/sda1</code></td>
+        <td>EFI System Partition</td>
+        <td>512 MB</td>
+        <td>FAT32 (<code>ef00</code>)</td>
+      </tr>
+      <tr>
+        <td><code>/dev/sda2</code></td>
+        <td>Swap</td>
+        <td>4–8 GB</td>
+        <td>swap (<code>8200</code>)</td>
+      </tr>
+      <tr>
+        <td><code>/dev/sda3</code></td>
+        <td>Partición raíz (<code>/</code>)</td>
+        <td>20 GB or more</td>
+        <td>ext4 (<code>8300</code>)</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+    <p></p>
+    <h2>II. Mount and export variables and system</h2>
+    <p>First we log in as root and export the target partition variable.</p>
+    <pre><code>
+    sudo su
+    export LFS=/mnt/lfs
+    mkdir -pv $LFS
+    </code></pre>
+    <p>Now we format the /dev/sda3 partition as ext4 and mount the file system, we also prepare the swap and efi partitions.</p>
+    <pre><code>
+    mkfs.fat -F32 /dev/sda1
+    mkswap /dev/sda2
+    swapon /dev/sda2
+    mkfs.ext4 /dev/sda3
+    mount /dev/sda3 $LFS
+    </code></pre>
+    <p>Once the partition is mounted, we extract the compressed file to the $LFS work environment and mount it.</p>
+    <pre><code>
+    mv stage3-20250722-amd64.tar.xz /mnt/lfs/stage 3-20250722-amd64.tar.xz
+    tar -xJpf stage3-20250722-amd64.tar.xz -C $LFS
+    cd $LFS
+    mkdir -p /mnt/lfs/boot/efi
+    mount /dev/sda1 /mnt/lfs/boot/efi
+    </code></pre>
+    <p>We set up the virtual systems before entering.</p>
+    <pre><code>
+    mount -v --bind /dev $LFS/dev
+    mount -v --bind /dev/pts $LFS/dev/pts
+    mount -vt proc proc $LFS/proc
+    mount -vt sysfs sysfs $LFS/sys
+    mount -vt tmpfs tmpfs $LFS/run
+    </code></pre>
+    <p></p>
+    <h2>III. Enter chroot and mount the rest of the system</h2>
+    <pre><code>
+    chroot "$LFS" /usr/bin/env -i \
+    HOME=/root TERM="$TERM" PS1='(root-basalt) \u:\w\$ ' \
+    PATH=/usr/bin:/usr/sbin:/bin:/sbin \
+    /bin/bash --login
+    </code></pre>
+
+    <p>From here you can continue with chapter 8 of the LFS-11.3 book or you can use the bpm package manager, which is not yet available for public use since it is currently under development.</p>
+    <p>In any case, I recommend exporting the MAKEFLAGS variable for faster compilation.</p>
+    <pre><code>
+    export MAKEFLAGS="-j$(nproc)"
+    </code></pre>
+    <p><a class="back-link" href="index.html">← Return</a></p>
+  </main>
+
+  <footer>
+    <p>© 2025 Basalt Linux. All rights reserved.</p>
+  </footer>
+</body>
+</html>

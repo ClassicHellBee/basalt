@@ -161,3 +161,52 @@ ul li a {
 ul li a:hover {
   text-decoration: underline;
 }
+
+.partition-guide {
+  margin-bottom: 2rem;
+}
+
+.partition-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background-color: #2f2f2f;
+  border: 1px solid #444;
+  color: #ddd;
+  font-size: 0.95rem;
+}
+
+.partition-table th,
+.partition-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #444;
+  text-align: left;
+}
+
+.partition-table thead th {
+  background-color: #00b894;
+  color: #111;
+  font-weight: 600;
+}
+
+.partition-table tbody tr:hover {
+  background-color: #3f3f3f;
+}
+
+pre {
+  background-color: #1e1e1e;
+  color: #dcdcdc;
+  padding: 1rem;
+  margin: 1.5rem 0;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  border-left: 4px solid #00b894;
+}
+
+code {
+  font-family: Consolas, Menlo, Monaco, "Courier New", monospace;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
