@@ -19,7 +19,7 @@
   </header>
 
   <main class="container">
-    <h1>Handbook for AMD64 Source Edition</h1>
+    <h1>Handbook for AMD64 BPM Edition</h1>
     <p>This is the manual handbook for creating a Basalt system using Stage3 without a package manager.</p>
     <p>From extracting the image to having a functional system, everything else besides the system will be written in a separate guide.</p>
     <p>It is assumed that you are using an Ubuntu/Debian host system with an active desktop environment for the Stage 3 download. A Live CD should be fine.</p>
@@ -52,7 +52,7 @@
       </tr>
       <tr>
         <td><code>/dev/sda3</code></td>
-        <td> Root partition (<code>/</code>)</td>
+        <td>Root partition(<code>/</code>)</td>
         <td>20 GB or more</td>
         <td>ext4 (<code>8300</code>)</td>
       </tr>
@@ -100,11 +100,30 @@
     /bin/bash --login
     </code></pre>
 
-    <p>From here you can continue with chapter 8 of the LFS-11.3 book or you can use the bpm package manager, which is not yet available for public use since it is currently under development.</p>
+    <p>From here you can continue with chapter 8 of the LFS-11.3 book or you can use the bpm package manager, which we just released to the public.</p>
     <p>In any case, I recommend exporting the MAKEFLAGS variable for faster compilation.</p>
     <pre><code>
     export MAKEFLAGS="-j$(nproc)"
     </code></pre>
+    <p>To compile everything with our package manager, remember to use the stage3-basalt-*.tar.xz image.</p>
+    <p>So to compile all the tools needed to have a functional system except for the kernel and grub, type:</p>
+    <pre><code>
+    basalt
+    </code></pre>
+    <p>after compiling with basalt, set the root password</p>
+    <pre><code>
+    passwd root
+    </code></pre>
+    <p>Finally, clean up the extra test files we ran during the build.</p>
+    <pre><code>
+    rm -rf /tmp/*
+    find /usr/lib /usr/libexec -name \*.la -delete
+    find /usr -depth -name $(uname -m)-lfs-linux-gnu\* | xargs rm -rf
+    userdel -r tester
+    </code></pre>
+    <p>From here, system configurations come into play.</p>
+    <h2>IV. System Configurations</h2>
+    <p>WIP</p>
     <p><a class="back-link" href="index.html">← Return</a></p>
   </main>
 
