@@ -105,11 +105,11 @@
     <pre><code>
     export MAKEFLAGS="-j$(nproc)"
     </code></pre>
-    <p>To compile everything with our package manager, remember to use the stage3-basalt-*.tar.xz image.</p>
-    <p>So to compile all the tools needed to have a functional system except for the kernel and grub, type:</p>
     <p>On some machines it has problems with some compilation packages, which I have not yet identified all, but I suspect they are glibc (confirmed), gcc and ncurses, so I have removed them from the bpm.</p>
     <p>In that case, follow the guide to compile Basalt using only the source code. </p>
     <p>Anyway I will fix it when I can identify all the failing packages.</p>
+    <p>To compile everything with our package manager, remember to use the stage3-basalt-*.tar.xz image.</p>
+    <p>So to compile all the tools needed to have a functional system except for the kernel and grub, type:</p>
     <pre><code>
     basalt
     </code></pre>
