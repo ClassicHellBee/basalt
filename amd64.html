@@ -99,12 +99,28 @@
     PATH=/usr/bin:/usr/sbin:/bin:/sbin \
     /bin/bash --login
     </code></pre>
-
-    <p>From here you can continue with chapter 8 of the LFS-11.3 book or you can use the bpm package manager, which is not yet available for public use since it is currently under development.</p>
     <p>In any case, I recommend exporting the MAKEFLAGS variable for faster compilation.</p>
     <pre><code>
     export MAKEFLAGS="-j$(nproc)"
     </code></pre>
+
+    <h2>IV. Installing basic system software</h2>
+    <p>From here on, many commands are repeated, and a minimum understanding of Linux and compilation is needed to carry this out.</p>
+    <p>So it is assumed that you have this knowledge, that said I move on.</p>
+    <p>Man-pages and iana-etc are not too complicated, however to extract the packages, it is all the same process, first we will enter /sources and extract man-pages.</p>
+    <pre><code>
+    cd /sources
+    tar -xvf man-pages-6.03.tar.xz
+    cd man-pages-6.03.tar.xz
+    </code></pre>
+    <p>Now to compile it and exit its directory, it would be like this.</p>
+    <pre><code>
+    make prefix=/usr install
+    cd ../
+    </code></pre>
+    <p>The rest of the packages share the same way of extracting themselves and also the way of leaving the directory. You can follow the rest of the compilation guide from chapter 8 of <a href="https://www.linuxfromscratch.org/lfs/downloads/11.3/">lfs 11.3 book.</a></p>
+    <h2>V. System Configurations</h2>
+    <p>WIP</p>
     <p><a class="back-link" href="index.html">← Return</a></p>
   </main>
 
